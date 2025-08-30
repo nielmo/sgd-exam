@@ -10,6 +10,7 @@ interface LoadingSpinnerProps {
 export function LoadingSpinner({ className, size = "md" }: LoadingSpinnerProps) {
   return (
     <div
+      data-testid="loading-spinner"
       className={cn(
         "animate-spin rounded-full border-2 border-current border-t-transparent",
         {
@@ -31,6 +32,7 @@ interface LoadingSkeletonProps {
 export function LoadingSkeleton({ className }: LoadingSkeletonProps) {
   return (
     <div
+      data-testid="loading-skeleton"
       className={cn(
         "animate-pulse rounded-md bg-muted",
         className

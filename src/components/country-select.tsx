@@ -41,10 +41,12 @@ export function CountrySelect({
     )
   }
 
-  const countryOptions: SearchableSelectOption[] = countries.map((country) => ({
-    value: country.id.toString(),
-    label: country.value,
-  }))
+  const countryOptions: SearchableSelectOption[] = (countries || [])
+    .filter((country) => country && typeof country.id !== 'undefined' && country.value)
+    .map((country) => ({
+      value: country.id.toString(),
+      label: country.value,
+    }))
 
   return (
     <div className="space-y-2 animate-in fade-in-50 duration-200">
