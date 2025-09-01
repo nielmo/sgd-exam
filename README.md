@@ -1,36 +1,167 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Country-State Dropdown Application
 
-## Getting Started
+![Country-State Dropdown Demo](https://img.shields.io/badge/Demo-Live-brightgreen)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Test Coverage](https://img.shields.io/badge/Coverage->80%25-brightgreen)](./coverage)
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Cascading Dropdowns**: Intelligent country-state selection with automatic state list updates
+- **Real-time API Integration**: Live data fetching from external country/state API
+- **Error Handling**: Robust error boundaries with user-friendly fallbacks
+- **Loading States**: Smooth loading indicators and skeleton components
+- **Search Functionality**: Searchable dropdowns for improved UX
+- **TypeScript**: Full type safety across the entire application
+- **Comprehensive Testing**: >80% test coverage with unit and integration tests
+
+## 🏗️ Architecture Overview
+
+```mermaid
+graph TB
+    A[App Layout] --> B[CountryStateForm]
+    B --> C[CountrySelect]
+    B --> D[StateSelect]
+    
+    C --> E[useCountries Hook]
+    D --> F[useStates Hook]
+    
+    E --> G[API Client]
+    F --> G
+    
+    G --> H[External API]
+    
+    B --> I[State Management]
+    I --> J[Selected Country]
+    I --> K[Selected State]
+    
+    subgraph "UI Components"
+        C --> L[shadcn/ui Select]
+        D --> M[shadcn/ui Select]
+        L --> N[Loading/Error States]
+        M --> O[Loading/Error States]
+    end
+    
+    subgraph "Data Flow"
+        E --> P[Countries Data]
+        F --> Q[States Data]
+        P --> C
+        Q --> D
+    end
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Technology Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Core Framework
+- **[Next.js 15](https://nextjs.org/)** - React framework with App Router for optimal performance
+- **[React 19](https://reactjs.org/)** - Modern React with latest features and hooks
+- **[TypeScript](https://www.typescriptlang.org/)** - Static type checking for enhanced development experience
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Styling & UI
+- **[Tailwind](https://tailwindcss.com/)** - Utility-first CSS framework for rapid UI development
+- **[shadcn/ui](https://ui.shadcn.com/)** - High-quality, accessible UI components
 
-## Learn More
+### Testing & Quality
+- **[Vitest](https://vitest.dev/)** - Fast, modern testing framework
+- **[React Testing Library](https://testing-library.com/)** - Simple and complete testing utilities
 
-To learn more about Next.js, take a look at the following resources:
+## 📋 Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Before you begin, ensure you have the following installed:
+- **Node.js** (version 18.17 or higher)
+- **npm** (version 9 or higher) or **yarn** (version 1.22 or higher)
+- **Git** for version control
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚡ Quick Start
 
-## Deploy on Vercel
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd sdg-exam
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Environment Configuration
+Create a `.env` file in the root directory:
+
+```env
+NEXT_PUBLIC_COUNTRY_API_BASE_URL=<API URL>
+NEXT_PUBLIC_COUNTRY_API_KEY=<API KEY>
+```
+
+### 4. Run Development Server
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+## 🧪 Testing
+
+### Run All Tests
+```bash
+npm test
+```
+
+### Watch Mode (Development)
+```bash
+npm run test:watch
+```
+
+### Coverage Report
+```bash
+npm run test:coverage
+```
+
+View coverage report at `./coverage/index.html`
+
+### Test Structure
+- **Unit Tests**: Individual component and hook testing
+- **Integration Tests**: Complete user flow testing
+
+### Available Scripts
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run test         # Run tests
+npm run test:watch   # Run tests in watch mode
+npm run test:coverage # Generate coverage report
+```
+
+## 🔌 API Integration
+
+### Base Configuration
+- **Base URL**: <API URL>
+- **Authentication**: Custom header `X-API-Key`
+- **Response Format**: JSON
+
+### Endpoints
+
+#### Get Countries
+```typescript
+GET /countries
+Response: Country[]
+
+interface Country {
+  id: number;
+  value: string;
+}
+```
+
+#### Get States by Country
+```typescript
+GET /countries/{countryId}/states
+Response: State[]
+
+interface State {
+  id: number;
+  value: string;
+}
+```
