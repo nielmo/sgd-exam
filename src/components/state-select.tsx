@@ -56,10 +56,12 @@ export function StateSelect({
     )
   }
 
-  const stateOptions: SearchableSelectOption[] = states.map((state) => ({
-    value: state.id.toString(),
-    label: state.value,
-  }))
+  const stateOptions: SearchableSelectOption[] = (states || [])
+    .filter((state) => state && typeof state.id !== 'undefined' && state.value)
+    .map((state) => ({
+      value: state.id.toString(),
+      label: state.value,
+    }))
 
   return (
     <div className="space-y-2 animate-in fade-in-50 duration-200">

@@ -50,6 +50,11 @@ class ApiClient {
   async fetchCountries(): Promise<Country[]> {
     try {
       const countries = await this.request<Country[]>('/countries');
+      
+      if (!countries || !Array.isArray(countries)) {
+        throw new Error('Invalid response: expected an array of countries');
+      }
+      
       return countries;
     } catch (error) {
       if (error instanceof Error) {
@@ -66,6 +71,11 @@ class ApiClient {
 
     try {
       const states = await this.request<State[]>(`/countries/${countryId}/states`);
+      
+      if (!states || !Array.isArray(states)) {
+        throw new Error('Invalid response: expected an array of states');
+      }
+      
       return states;
     } catch (error) {
       if (error instanceof Error) {
